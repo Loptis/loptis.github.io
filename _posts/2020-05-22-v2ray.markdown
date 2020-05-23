@@ -3,7 +3,7 @@ layout: post
 title: v2ray帮助文档
 date: 2020-05-22 18:12:00 +0800
 description: V2Ray是近几年十分流行的网络工具，其功能强大，用途不限于突破防火墙，但因其能有效翻墙而广为人知。
-img: i-rest.jpg # Add image post (optional)
+img: v2ray-1.png # Add image post (optional)
 tags: [v2ray] # add tag
 ---
 
