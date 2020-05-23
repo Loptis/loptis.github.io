@@ -11,7 +11,7 @@ url: "" # the base hostname & protocol for your site, e.g. http://example.com
 # Author Settings
 author: 改个名字 # add your name
 author-img: head.jpeg # add your photo
-about-author:  # add description
+about-author: 昨夜雨疏风骤，浓睡不消残酒。试问卷帘人，却道海棠依旧。知否，知否？应是绿肥红瘦。 # add description
 #social-twitter: # add your Twitter handle
 #social-facebook: # add your Facebook handle
 social-github: https://github.com/ # add your Github handle
