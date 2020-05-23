@@ -22,7 +22,8 @@ social-email: gaoy0902@gmail.com # add your Email address
 analytics: # Google Analytics
 
 # Build Settings
-markdown: redcarpet
+markdown: kramdown
+highlighter: rouge
 redcarpet:
   extensions: [ "hard_wrap","autolink", "tables", "strikethrough", "superscript", "with_toc_data", "highlight", "prettify","no_intra_emphasis"]
 plugins:
