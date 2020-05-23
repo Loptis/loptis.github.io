@@ -2,14 +2,14 @@
 layout: post
 title: v2ray帮助文档
 date: 2020-05-22 18:12:00 +0800
-description: V2Ray是近几年十分流行的网络工具，其功能强大，用途不限于突破防火墙，但因其能有效翻墙而广为人知。
-img: v2ray-1.png # Add image post (optional)
+description: V2Ray是近几年十分流行的网络工具，其功能强大，用途不限于突破防火墙，但因其能有效翻墙而广为人知。# Add description post (optional)
+img:  # Add image post (optional)
 tags: [v2ray] # add tag
 ---
 
 ### V2Ray简介
 
-V2Ray是近几年十分流行的网络工具，其功能强大，用途不限于突破防火墙，但因其能有效翻墙而广为人知。V2Ray有如下大放异彩的特点：
+  V2Ray是近几年十分流行的网络工具，其功能强大，用途不限于突破防火墙，但因其能有效翻墙而广为人知。V2Ray有如下大放异彩的特点：
 
 * 开源。V2Ray是Project V的核心工具，源代码开源；
 * 多协议支持。传输层支持TCP、mKCP、WebSocket等，上层协议支持Socks、Shadowsocks、以及自定义的VMess等；
