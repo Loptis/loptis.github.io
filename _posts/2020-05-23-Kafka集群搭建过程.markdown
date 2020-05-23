@@ -13,8 +13,11 @@ tags: [Kafka] # add tag
 > 环境要求 jdk8
 
 > 系统centos7.3
+
 ## 一、搭建zookeeper集群
+
 > 三个节点都要下载配置
+
 ### 1.下载zookeeper
 ```shell
 $ cd /home/innjoy/zookeeper
@@ -39,6 +42,7 @@ server.3= 10.7.16.135:2888:3888
 $ mkdir -p /home/innjoy/zookeeper/zookeeper-3.4.14/{logs,data}
 ```
 ### 4.创建ServerID标识
+
 > 除了修改zoo.cfg配置文件外,zookeeper集群模式下还要配置一个myid文件,这个文件需要放在dataDir目录下。
 
 在192.168.1.148服务器上面创建myid文件，并设置值为1
@@ -68,7 +72,9 @@ Mode: leader
 ```
 ## 二、搭建kafka集群
 ### 1.下载kafka
+
 > 三个节点都要下载配置
+
 ```shell
 $ cd /home/innjoy/kafka
 $ wget http://mirror.bit.edu.cn/apache/kafka/2.2.0/kafka_2.11-2.2.0.tgz
