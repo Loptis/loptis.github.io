@@ -39,8 +39,8 @@ timezone: Asia/Beijing
 encoding: utf-8
 
 #gitment
-comment_user: loptis
-comment_admin: loptis
+comment_user: Loptis
+comment_admin: Loptis
 comment_repo: Loptis/jekyll-comment
 comment_gitalk_clientId: 1f8f817a5e4de2a9118a
 comment_gitalk_clientSecret: 4d09687a7c51567111d630de1d6791ef49332a8f
