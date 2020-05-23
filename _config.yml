@@ -40,3 +40,7 @@ encoding: utf-8
 
 #gitment
 comment_repo: Loptis/jekyll-comment
+comment_gitment_clientId: f78e210a3819d342b966
+comment_gitment_clientSecret: 15d367ba840fd5d3d1724e0ae7a227b8a45e1c4a
+
+
