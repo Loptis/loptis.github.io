@@ -18,14 +18,13 @@ social-github: https://github.com/ # add your Github handle
 #social-linkedin: # add your Linkedin handle
 social-email: gaoy0902@gmail.com # add your Email address
 
-# Disqus
-discus-identifier: mr-brown # add your discus identifier
-
 # Tracker
 analytics: # Google Analytics
 
 # Build Settings
-markdown: markdown
+markdown: redcarpet
+redcarpet:
+  extensions: [ "hard_wrap","autolink", "tables", "strikethrough", "superscript", "with_toc_data", "highlight", "prettify","no_intra_emphasis"]
 plugins:
   - jekyll-sitemap
   - jekyll-paginate
