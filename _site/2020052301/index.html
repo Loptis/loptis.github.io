@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>Kafka集群搭建过程 - Loptis的博客</title>
+
+  <!-- Edit site and author settings in `_config.yml` to make the social details your own -->
+
+    <meta content="Loptis的博客" property="og:site_name">
+  
+    <meta content="Kafka集群搭建过程" property="og:title">
+  
+  
+    <meta content="article" property="og:type">
+  
+  
+    <meta content="Linux安装Kafka以及Kafka集群搭建过程" property="og:description">
+  
+  
+    <meta content="http://localhost:4000/2020052301/" property="og:url">
+  
+  
+    <meta content="2020-05-23T10:37:00+00:00" property="article:published_time">
+    <meta content="http://localhost:4000/about/" property="article:author">
+  
+  
+    <meta content="http://localhost:4000/assets/img/head.jpeg" property="og:image">
+  
+  
+    
+  
+  
+    
+    <meta content="Kafka" property="article:tag">
+    
+  
+
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="@">
+    <meta name="twitter:creator" content="@">
+  
+    <meta name="twitter:title" content="Kafka集群搭建过程">
+  
+  
+    <meta name="twitter:url" content="http://localhost:4000/2020052301/">
+  
+  
+    <meta name="twitter:description" content="Linux安装Kafka以及Kafka集群搭建过程">
+  
+  
+    <meta name="twitter:image:src" content="http://localhost:4000/assets/img/head.jpeg">
+  
+
+	<meta name="description" content="Linux安装Kafka以及Kafka集群搭建过程">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<meta property="og:image" content="">
+	<link rel="shortcut icon" href="/assets/img/favicon/favicon.ico" type="image/x-icon">
+	<link rel="apple-touch-icon" href="/assets/img/favicon/apple-touch-icon.png">
+	<link rel="apple-touch-icon" sizes="72x72" href="/assets/img/favicon/apple-touch-icon-72x72.png">
+	<link rel="apple-touch-icon" sizes="144x144" href="/assets/img/favicon/apple-touch-icon-144x144.png">
+	<!-- Chrome, Firefox OS and Opera -->
+	<meta name="theme-color" content="#263959">
+	<!-- Windows Phone -->
+	<meta name="msapplication-navbutton-color" content="#263959">
+	<!-- iOS Safari -->
+	<meta name="apple-mobile-web-app-status-bar-style" content="#263959">
+	<!-- Google Fonts -->
+	<link href="https://fonts.googleapis.com/css?family=PT+Serif:400,700" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Lato:300,400,700" rel="stylesheet">
+	<!-- Font Awesome -->
+	<link rel="stylesheet" href="/assets/fonts/font-awesome/css/font-awesome.min.css">
+	<!-- Styles -->
+	<link rel="stylesheet" href="/assets/css/main.css">
+</head>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+<body>
+<!--<div style="text-align: right; margin-bottom: -150px;">-->
+<!--    <a href="https://github.com/Loptis"><img width="149" height="149" src="https://github.blog/wp-content/uploads/2008/12/forkme_right_darkblue_121621.png?resize=149%2C149" class="attachment-full size-full" alt="Fork me on GitHub" data-recalc-dims="1"></a>-->
+<!--</div>-->
+<div class="wrapper">
+    <aside class="sidebar">
+  <header>
+    <div class="about">
+      <div class="cover-author-image">
+        <a href="/"><img src="/assets/img/head.jpeg" alt="改个名字"></a>
+      </div>
+      <div class="author-name">改个名字</div>
+      <p>昨夜雨疏风骤，浓睡不消残酒。试问卷帘人，却道海棠依旧。知否，知否？应是绿肥红瘦。</p>
+    </div>
+  </header> <!-- End Header -->
+  <footer>
+    <section class="contact">
+      <h3 class="contact-title">Contact me</h3>
+      <ul>
+        
+          <li class="github"><a href="http://github.com/loptis" target="_blank"><i class="fa fa-github"></i></a></li>
+        
+        
+          <li class="email"><a href="mailto:gaoy0902@gmail.com"><i class="fa fa-envelope-o"></i></a></li>
+        
+      </ul>
+    </section> <!-- End Section Contact -->
+    <div class="copyright">
+      <p>2020 &copy; 改个名字</p>
+    </div>
+    <div style="text-align: center;margin: 0;padding: 0;">
+      <script type="text/javascript">document.write(unescape("%3Cspan id='cnzz_stat_icon_1278929908'%3E%3C/span%3E%3Cscript src='https://s4.cnzz.com/z_stat.php%3Fid%3D1278929908%26show%3Dpic' type='text/javascript'%3E%3C/script%3E"));</script>
+    </div>
+  </footer> <!-- End Footer -->
+</aside> <!-- End Sidebar -->
+<div class="content-box clearfix">
+  <article class="article-page">
+  <div class="page-content">
+    
+    
+    <div class="wrap-content">
+      <header class="header-page">
+        <h1 class="page-title">Kafka集群搭建过程</h1>
+        <div class="page-date"><span>2020, 05 23&nbsp;&nbsp;&nbsp;&nbsp;</span></div>
+      </header>
+      <blockquote>
+  <p>准备三台服务器，分别命名为server1(10.7.16.108)、server2(10.7.16.144)、server3(10.7.16.135)</p>
+</blockquote>
+
+<blockquote>
+  <p>环境要求 jdk8</p>
+</blockquote>
+
+<blockquote>
+  <p>系统centos7.3</p>
+</blockquote>
+
+<h2 id="一搭建zookeeper集群">一、搭建zookeeper集群</h2>
+
+<blockquote>
+  <p>三个节点都要下载配置</p>
+</blockquote>
+
+<h3 id="1下载zookeeper">1.下载zookeeper</h3>
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">cd</span> /home/innjoy/zookeeper
+<span class="nv">$ </span>wget http://mirror.bit.edu.cn/apache/zookeeper/zookeeper-3.4.14/zookeeper-3.4.14.tar.gz
+<span class="nv">$ </span><span class="nb">cd </span>zookeeper-3.4.14
+<span class="nv">$ </span><span class="nb">cp </span>conf/zoo_sample.cfg conf/zoo.cfg
+</code></pre></div></div>
+<h3 id="2修改zookeeper配置文件">2.修改zookeeper配置文件</h3>
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>vi /conf/zoo.cfg
+</code></pre></div></div>
+<p>增加下面配置信息</p>
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">dataLogDir</span><span class="o">=</span>/home/innjoy/zookeeper/logs
+<span class="nv">dataDir</span><span class="o">=</span>/home/innjoy/zookeeper/data
+server.1<span class="o">=</span> 10.7.16.108:2888:3888
+server.2<span class="o">=</span> 10.7.16.144:2888:3888
+server.3<span class="o">=</span> 10.7.16.135:2888:3888
+</code></pre></div></div>
+<h3 id="3创建相关目录三台节点都需要">3.创建相关目录，三台节点都需要</h3>
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">mkdir</span> <span class="nt">-p</span> /home/innjoy/zookeeper/zookeeper-3.4.14/<span class="o">{</span>logs,data<span class="o">}</span>
+</code></pre></div></div>
+<h3 id="4创建serverid标识">4.创建ServerID标识</h3>
+
+<blockquote>
+  <p>除了修改zoo.cfg配置文件外,zookeeper集群模式下还要配置一个myid文件,这个文件需要放在dataDir目录下。</p>
+</blockquote>
+
+<p>在192.168.1.148服务器上面创建myid文件，并设置值为1</p>
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">echo</span> <span class="s2">"1"</span> <span class="o">&gt;</span> /home/innjoy/zookeeper/data/myid
+</code></pre></div></div>
+<p>在192.168.1.149服务器上面创建myid文件，并设置值为2</p>
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">echo</span> <span class="s2">"2"</span> <span class="o">&gt;</span> /home/innjoy/zookeeper/data/myid
+</code></pre></div></div>
+<p>在192.168.1.150服务器上面创建myid文件，并设置值为3</p>
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">echo</span> <span class="s2">"3"</span> <span class="o">&gt;</span> /home/innjoy/zookeeper/data/myid
+</code></pre></div></div>
+<h3 id="5启动每个服务器上面的zookeeper节点">5.启动每个服务器上面的zookeeper节点</h3>
+
+<p>分别在3台节点执行启动命令</p>
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>./bin/zkServer.sh start
+</code></pre></div></div>
+<p>查看节点zookeeper状态</p>
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>./bin/zkServer.sh status
+ZooKeeper JMX enabled by default
+Using config: /home/innjoy/zookeeper/zookeeper-3.4.14/bin/../conf/zoo.cfg
+Mode: leader
+</code></pre></div></div>
+<h2 id="二搭建kafka集群">二、搭建kafka集群</h2>
+<h3 id="1下载kafka">1.下载kafka</h3>
+
+<blockquote>
+  <p>三个节点都要下载配置</p>
+</blockquote>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">cd</span> /home/innjoy/kafka
+<span class="nv">$ </span>wget http://mirror.bit.edu.cn/apache/kafka/2.2.0/kafka_2.11-2.2.0.tgz
+</code></pre></div></div>
+<h3 id="2修改kafka配置文件">2.修改kafka配置文件</h3>
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">cd </span>kafka_2.11-2.2.0/config
+<span class="nv">$ </span>vi server.properties
+</code></pre></div></div>
+<p>需要修改的内容如下：</p>
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># The id of the broker. This must be set to a unique integer for each broker</span>
+broker.id<span class="o">=</span>2
+<span class="c"># A comma separated list of directories under which to store log files</span>
+log.dirs<span class="o">=</span>/home/innjoy/kafka/data
+<span class="c"># Zookeeper connection string</span>
+zookeeper.connect<span class="o">=</span>10.7.16.108:2181,10.7.16.144:2192,10.7.16.135:2181
+</code></pre></div></div>
+<h3 id="3启动kafka">3.启动kafka</h3>
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>./kafka-server-start.sh <span class="nt">-daemon</span> ../config/server.properties
+</code></pre></div></div>
+<h3 id="4验证是否启动kafka">4.验证是否启动kafka</h3>
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>jps
+63938 Kafka
+62840 QuorumPeerMain
+63982 Jps
+</code></pre></div></div>
+
+
+      <div class="page-footer">
+        <div class="page-share">
+<!--          <a href="https://twitter.com/intent/tweet?text=Kafka集群搭建过程&url=http://localhost:4000/2020052301/" title="Share on Twitter" rel="nofollow" target="_blank">Twitter</a>-->
+<!--          <a href="https://facebook.com/sharer.php?u=http://localhost:4000/2020052301/" title="Share on Facebook" rel="nofollow" target="_blank">Facebook</a>-->
+<!--          <a href="https://plus.google.com/share?url=http://localhost:4000/2020052301/" title="Share on Google+" rel="nofollow" target="_blank">Google+</a>-->
+        </div>
+        <div class="page-tag">
+          
+            <a href="/tags#Kafka" class="tag">&#35; Kafka</a>
+          
+        </div>
+      </div>
+
+      
+        <div id="gitalk-container"></div>
+        <script>
+            var gitalk = new Gitalk({
+                clientID: '1f8f817a5e4de2a9118a',
+                clientSecret: '4d09687a7c51567111d630de1d6791ef49332a8f',
+                repo: 'jekyll-comment',
+                owner: 'Loptis',
+                admin: ['Loptis'],
+                language: 'zh-CN',
+                id: location.pathname
+            })
+
+            gitalk.render('gitalk-container')
+        </script>
+      
+
+    </div> <!-- End Wrap Content -->
+  </div> <!-- End Page Content -->
+</article> <!-- End Article Page -->
+
+</div>
+
+</div>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-YLZLSPV5VR"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-YLZLSPV5VR');
+</script>
+</body>
+</html>
