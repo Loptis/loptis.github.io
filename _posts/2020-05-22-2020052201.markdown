@@ -41,3 +41,4 @@ tags: [v2ray] # add tag
 #### 3、点击右下角灰色的V按钮，如下图所示则说明vpn连接成功
 
 ![]({{site.baseurl}}/assets/img/20200522003.png){:height="500px" width="300px"}
+
